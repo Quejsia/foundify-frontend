@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Routes, Route, useNavigate } from 'react-router-dom'
-import Navbar from './components/Navbar'
+import Navbar from './components/Navbar.jsx'   // ✅ fixed import
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Dashboard from './pages/Dashboard'
@@ -73,5 +73,4 @@ export default function App() {
         </Routes>
       </main>
     </div>
-  )
-}
+ import
