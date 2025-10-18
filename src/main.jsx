@@ -1,8 +1,8 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
-import App from './App'
-import './style.css'
+import App from './App.jsx'   // ✅ Make sure .jsx extension matches the real file
+import './styles.css'         // ✅ This must match your actual filename (“styles.css”)
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
