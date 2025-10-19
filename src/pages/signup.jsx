@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import api from '../api';
+import React from 'react';
+import api from '../../api';
 
 export default function Signup({ onAuth }) {
   const [name, setName] = useState('');
