@@ -9,7 +9,8 @@ export default function Navbar({ user, onLogout, onThemeToggle }) {
         <span>Foundify ✨</span>
       </div>
       <div className="nav-links">
-        <Link to="/">Home</Link>
+        {user && <Link to="/dashboard">Dashboard</Link>}
+        {user && <Link to="/report">Report Item</Link>}
         {user ? (
           <>
             <Link to="/messages">Messages</Link>
