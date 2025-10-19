@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import Login from './pages/Login';
@@ -71,8 +71,14 @@ export default function App() {
           <Route path="/" element={<Dashboard user={user} />} />
           <Route path="/login" element={<Login onAuth={handleAuth} />} />
           <Route path="/signup" element={<Signup onAuth={handleAuth} />} />
-          <Route path="/admin" element={<AdminDashboard user={user} />} />
-          <Route path="/messages" element={<Messages user={user} />} />
+          <Route 
+            path="/admin" 
+            element={user?.role === 'admin' ? <AdminDashboard user={user} /> : <Navigate to="/login" />} 
+          />
+          <Route 
+            path="/messages" 
+            element={user ? <Messages user={user} /> : <Navigate to="/login" />} 
+          />
         </Routes>
       </main>
 
