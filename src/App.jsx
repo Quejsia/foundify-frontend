@@ -7,6 +7,7 @@ import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
 import AdminDashboard from './pages/AdminDashboard';
 import Messages from './pages/Messages';
+import ReportItem from './pages/ReportItem';
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -32,10 +33,17 @@ export default function App() {
     navigate('/login');
   };
 
-  const handleAuth = (user, token) => {
+  const handleAuth = (userData, token) => {
     localStorage.setItem('foundify_token', token);
-    localStorage.setItem('foundify_user', JSON.stringify(user));
-    setUser(user);
+    localStorage.setItem('foundify_user', JSON.stringify(userData));
+    setUser(userData);
+    
+    // Redirect based on role
+    if (userData.role === 'admin') {
+      navigate('/admin');
+    } else {
+      navigate('/dashboard');
+    }
   };
 
   if (loading) {
@@ -68,16 +76,42 @@ export default function App() {
 
       <main className="container p-4">
         <Routes>
-          <Route path="/" element={<Dashboard user={user} />} />
-          <Route path="/login" element={<Login onAuth={handleAuth} />} />
-          <Route path="/signup" element={<Signup onAuth={handleAuth} />} />
+          {/* Public routes - redirect to dashboard if already logged in */}
           <Route 
-            path="/admin" 
-            element={user?.role === 'admin' ? <AdminDashboard user={user} /> : <Navigate to="/login" />} 
+            path="/" 
+            element={user ? <Navigate to="/dashboard" /> : <Navigate to="/login" />} 
+          />
+          <Route 
+            path="/login" 
+            element={user ? <Navigate to="/dashboard" /> : <Login onAuth={handleAuth} />} 
+          />
+          <Route 
+            path="/signup" 
+            element={user ? <Navigate to="/dashboard" /> : <Signup onAuth={handleAuth} />} 
+          />
+          
+          {/* Protected routes - require login */}
+          <Route 
+            path="/dashboard" 
+            element={user ? <Dashboard user={user} /> : <Navigate to="/login" />} 
+          />
+          <Route 
+            path="/report" 
+            element={user ? <ReportItem user={user} /> : <Navigate to="/login" />} 
           />
           <Route 
             path="/messages" 
             element={user ? <Messages user={user} /> : <Navigate to="/login" />} 
+          />
+          <Route 
+            path="/admin" 
+            element={
+              user?.role === 'admin' ? (
+                <AdminDashboard user={user} />
+              ) : (
+                <Navigate to="/login" />
+              )
+            } 
           />
         </Routes>
       </main>
