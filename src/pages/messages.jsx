@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import api from '../api';
+api' React, { useState } from 'react';
+import api from '../../api';
 
 export default function Messages({ user }) {
   const [msg, setMsg] = useState('');
