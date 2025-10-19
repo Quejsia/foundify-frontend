@@ -1,4 +1,4 @@
-api' React, { useState } from 'react';
+import React, { useState } from 'react';
 import api from '../../api';
 
 export default function Messages({ user }) {
@@ -11,6 +11,7 @@ export default function Messages({ user }) {
       setSent('Sending...');
       await api.claimItem('1234', msg); // replace with actual ID when integrated
       setSent('✅ Sent!');
+      setMsg(''); // Clear the message after sending
     } catch (err) {
       setSent(`❌ ${err.message}`);
     }
@@ -20,7 +21,12 @@ export default function Messages({ user }) {
     <div className="container card">
       <h2>Messages</h2>
       <form onSubmit={sendMessage}>
-        <textarea value={msg} onChange={e => setMsg(e.target.value)} placeholder="Enter message..." required />
+        <textarea 
+          value={msg} 
+          onChange={e => setMsg(e.target.value)} 
+          placeholder="Enter message..." 
+          required 
+        />
         <button className="btn" type="submit">Send</button>
       </form>
       <p className="muted small">{sent}</p>
