@@ -1,13 +1,9 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+// vite.config.js
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
-// ✅ Foundify ✨ Vite Configuration
 export default defineConfig({
   plugins: [react()],
-  server: {
-    port: 5173,
-  },
-  build: {
-    outDir: 'dist',
-  },
-})
+  server: { port: 5173 },
+  build: { outDir: "dist" }
+});
