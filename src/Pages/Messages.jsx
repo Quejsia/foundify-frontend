@@ -1,7 +1,29 @@
-import React from 'react'
-export default function Messages(){ return (
-  <div className="max-w-3xl mx-auto mt-6 p-4 bg-white rounded shadow">
-    <h2 className="font-semibold mb-2">Messages</h2>
-    <div className="text-sm">This page will show messages between claimers and owners.</div>
-  </div>
-) }
+import React, { useState } from 'react';
+import api from '../api';
+
+export default function Messages({ user }) {
+  const [msg, setMsg] = useState('');
+  const [sent, setSent] = useState('');
+
+  async function sendMessage(e) {
+    e.preventDefault();
+    try {
+      setSent('Sending...');
+      await api.claimItem('1234', msg); // replace with actual ID when integrated
+      setSent('✅ Sent!');
+    } catch (err) {
+      setSent(`❌ ${err.message}`);
+    }
+  }
+
+  return (
+    <div className="container card">
+      <h2>Messages</h2>
+      <form onSubmit={sendMessage}>
+        <textarea value={msg} onChange={e => setMsg(e.target.value)} placeholder="Enter message..." required />
+        <button className="btn" type="submit">Send</button>
+      </form>
+      <p className="muted small">{sent}</p>
+    </div>
+  );
+}
