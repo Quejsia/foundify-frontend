@@ -53,6 +53,16 @@ const api = {
       throw new Error(error.response?.data?.message || 'Failed to send message');
     }
   },
+
+  // Generic POST method for creating items and other requests
+  async post(endpoint, data) {
+    try {
+      const response = await apiClient.post(endpoint, data);
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response?.data?.error || error.response?.data?.message || 'Request failed');
+    }
+  },
 };
 
 export default api;
